@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+      <!-- Transformed welcome hero with extraordinary styling -->
+      <div class="hero-section text-center">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="container hero-content">
+          <h1 class="hero-title">Welcome back, {{ current_user.username }}</h1>
+          <p class="hero-subtitle">Here's what's new in the community. Stay inspired, stay connected.</p>
+          <a href="{{ url_for('posts.new_post') }}" class="hero-cta">✍️ Create a New Post</a>
+        </div>
+      </div>
+
+      <!-- Enhanced posts feed with modern card styling -->
+      <div class="main-content">
+        <div class="container">
+          {% for post in posts.items %}
+            <div class="content-section">
+              <div class="d-flex align-items-center mb-3">
+                <img class="rounded-circle mr-3" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}" width="50" height="50" style="border: 3px solid #10b981;">
+                <div>
+                  <a class="font-weight-bold" href="{{ url_for('users.user_posts', username=post.author.username) }}" style="color: #164e63; text-decoration: none; font-size: 1.1rem;">{{ post.author.username }}</a>
+                  <div class="text-muted small">{{ post.date_posted.strftime('%B %d, %Y') }}</div>
+                </div>
+              </div>
+              <h3>
+                <a href="{{ url_for('posts.post', post_id=post.id) }}" style="color: #164e63; text-decoration: none;">{{ post.title }}</a>
+              </h3>
+              <p class="intro-text">{{ post.content }}</p>
+            </div>
+          {% endfor %}
+
+          <!-- Styled pagination with modern design -->
+          <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+              {% for page_num in posts.iter_pages(left_edge=1,right_edge=1,left_current=1, right_current=2) %}
+                {% if page_num %}
+                  {% if posts.page == page_num %}
+                    <li class="page-item active">
+                      <a class="page-link" href="{{ url_for('main.home', page=page_num) }}" style="background: #10b981; border-color: #10b981; border-radius: 10px; margin: 0 2px;">{{ page_num }}</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item">
+                      <a class="page-link" href="{{ url_for('main.home', page=page_num) }}" style="color: #164e63; border-color: #e2e8f0; border-radius: 10px; margin: 0 2px;">{{ page_num }}</a>
+                    </li>
+                  {% endif %}
+                {% else %}
+                  <li class="page-item disabled"><span class="page-link" style="border-radius: 10px; margin: 0 2px;">…</span></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+    {% else %}
+      <!-- Extraordinary guest welcome section -->
+      <div class="hero-section text-center">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="container hero-content">
+          <h1 class="hero-title">Welcome to Inkwell Stories ✨</h1>
+          <p class="hero-subtitle">Join the conversation, share your stories, and explore thoughts from people around the world.</p>
+          <div class="mt-4">
+            <a class="hero-cta mr-3" href="{{ url_for('users.login') }}">🔑 Login</a>
+            <a class="btn btn-outline-light btn-lg" href="{{ url_for('users.register') }}" style="border-radius: 50px; padding: 1rem 2.5rem; font-weight: 600;">📝 Sign Up</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Added featured content section for guests -->
+      <div class="main-content">
+        <div class="container">
+          <div class="featured-content">
+            <h4>🌟 Featured Stories</h4>
+            <p>Discover amazing stories from our community of writers. From personal journeys to professional insights, there's something for everyone.</p>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-4">
+              <div class="content-section text-center">
+                <h3>📝 Share Your Voice</h3>
+                <p>Express yourself through the power of words. Your story matters and deserves to be heard.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="content-section text-center">
+                <h3>🤝 Connect & Engage</h3>
+                <p>Build meaningful connections with fellow writers and readers from around the globe.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="content-section text-center">
+                <h3>🚀 Grow Together</h3>
+                <p>Learn, improve, and inspire others as part of our vibrant storytelling community.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Added progress bar and scroll effects -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <script>
+        // Progress bar animation
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Floating elements animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingElements = document.querySelectorAll('.floating-element');
+            floatingElements.forEach((element, index) => {
+                element.style.animationDelay = (index * 2) + 's';
+            });
+        });
+    </script>
+{% endblock content %}
