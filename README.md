@@ -1,4 +1,4 @@
-# Simple-Blog-w-Flask
+# InkWell Stories
 This repo contains code for a simple flask-blog application using Flask and it's libraries for web development.
 
 This project is a template for a simple blog website with User Login/Signup, Post CRUD operations on a web interface.
@@ -23,43 +23,6 @@ To access the website just browse the following on your browser:
 
 ## Snapshots:
 ### Home Page
-
-
-### Registration Page
-
-
-### Login Page
-
-
-### Home Page After Login
-
-
-### Pagination on various pages
-
-
-### Account Page
-
-
-### New Post Page
-
-
-### Home Page after Post
-
-
-### Posts By User Page
-
-
-### Delete Post Page
-
-
-### Update Post Page
-
-
-### Forgot Password Page
-
-
-### Reset Password Page
-
-
-### Page Responsiveness
+<img width="1919" height="917" alt="image" src="https://github.com/user-attachments/assets/56bae793-fec5-4a57-b046-4d2351d3c730" />
+<img width="1919" height="915" alt="image" src="https://github.com/user-attachments/assets/62ec0691-252c-4576-a6ee-3fc98624de98" />
 
